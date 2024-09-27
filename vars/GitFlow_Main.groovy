@@ -400,7 +400,7 @@ def loadDummy(settings, sandboxId) {
             "application":          "''' + settings.ispw.application    + '''",
             "moduleName":           "DUMMY",
             "moduleType":           "COB",
-            "currentLevel":         "FEAT",
+            "currentLevel":         "UNIT",
             "startingLevel":        "UNIT"
         }'''
         
