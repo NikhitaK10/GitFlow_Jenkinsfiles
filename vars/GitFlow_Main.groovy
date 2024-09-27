@@ -74,6 +74,12 @@ def runFeature(settings) {
 
             runIntegrationTests(settings)
 
+            junit(
+                allowEmptyResults:  true, 
+                keepLongStdio:      true, 
+                testResults:        settings.ttt.results.jUnit.folder + '/*.xml'
+            )
+
             getCodeCoverage(settings)
         }
     }
@@ -142,6 +148,10 @@ def initializeSettings(configFile, parms) {
         settings                    = addFolderNames(settings)
         settings                    = addCoCoParms(settings)
  
+        if(!(parms.featureLoadLib == null)) {
+            settings.ttt.featureLoadLib = parms.featureLoadLib    
+        }
+
         settings.demoEnvironment    = parms.demoEnvironment
         settings.hci.credentialsId  = parms.hostCredentialsId
         settings.ces.credentialsId  = parms.cesCredentialsId
@@ -515,9 +525,17 @@ def buildMainframeCode(hostConnection, cesCredentialsId, runtimeConfig) {
 
 def runUnitTests(Map settings) {
 
-    stage("Run Unit Test") {
+    stage("Run Unit Tests") {
 
         echo "[Info] - Execute Unit Tests."
+
+        def loadLibName
+
+        if (!(settings.ttt.featureLoadLib == null)) {
+            loadLibName = settings.ttt.featureLoadLib
+        } else {
+            loadLibName = settings.ispw.libraryQualifier + '.' + settings.ispw.application  + '.' + 'FEAT.LOAD'
+        }
 
         totaltest(
             connectionId:                       settings.hci.connectionId,
@@ -537,7 +555,7 @@ def runUnitTests(Map settings) {
             createReport:                       true, 
             createResult:                       true, 
             createSonarReport:                  true,
-            contextVariables:                   '"load_lib=SALESSUP.GFLD.FEAT.LOAD"',
+            contextVariables:                   '"load_lib=' + loadLibName + '"',
             collectCodeCoverage:                true,
             collectCCRepository:                settings.coco.repo,
             collectCCSystem:                    settings.coco.systemId,
@@ -546,55 +564,60 @@ def runUnitTests(Map settings) {
             logLevel:                           'INFO'
         )
 
-        junit(
-            allowEmptyResults:  true, 
-            keepLongStdio:      true, 
-            testResults:        settings.ttt.results.jUnit.folder + '/*.xml'
-        )
     }
 }
 
 def runIntegrationTests(Map settings) {
 
-    echo "[Info] - Execute Module Integration Tests."
+    stage("Run Integration Tests") {
 
-    // settings.ttt.environmentIds.nonVirtualized.each {
+        echo "[Info] - Execute Module Integration Tests."
 
-    //     def envType     = it.key
-    //     def envId       = it.value
+        if (!(settings.ttt.featureLoadLib == null)) {
+            loadLibName = settings.ttt.featureLoadLib
+        } else {
+            loadLibName = settings.ispw.libraryQualifier + '.' + settings.ispw.application  + '.' + 'FEAT.LOAD'
+        }
 
-        totaltest(
-            connectionId:                       settings.hci.connectionId,
-            credentialsId:                      settings.hci.credentialsId,             
-            serverUrl:                          settings.ces.url, 
-            serverCredentialsId:                settings.hci.credentialsId, 
-            selectEnvironmentRadio:             '-hci',
-            //environmentId:                      envId, 
-            localConfig:                        false,
-            folderPath:                         settings.ttt.nvtFolder, 
-            recursive:                          true, 
-            selectProgramsOption:               true, 
-            jsonFile:                           settings.ispw.changedProgramsFile,
-            haltPipelineOnFailure:              false,                 
-            stopIfTestFailsOrThresholdReached:  false,
-            createJUnitReport:                  true, 
-            createReport:                       true, 
-            createResult:                       true, 
-            createSonarReport:                  true,
-            // contextVariables:                   '"nvt_ispw_app=' + applicationQualifier + 
-            //                                     ',nvt_ispw_level1=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level1 + 
-            //                                     ',nvt_ispw_level2=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level2 + 
-            //                                     ',nvt_ispw_level3=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level3 + 
-            //                                     ',nvt_ispw_level4=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level4 + 
-            //                                     '"',                
-            collectCodeCoverage:                true,
-            collectCCRepository:                settings.coco.repo,
-            collectCCSystem:                    settings.coco.systemId,
-            collectCCTestID:                    settings.coco.testId,
-            clearCodeCoverage:                  false,
-            logLevel:                           'INFO'
-        )
-    // }
+        // settings.ttt.environmentIds.nonVirtualized.each {
+
+        //     def envType     = it.key
+        //     def envId       = it.value
+
+            totaltest(
+                connectionId:                       settings.hci.connectionId,
+                credentialsId:                      settings.hci.credentialsId,             
+                serverUrl:                          settings.ces.url, 
+                serverCredentialsId:                settings.hci.credentialsId, 
+                selectEnvironmentRadio:             '-hci',
+                //environmentId:                      envId, 
+                localConfig:                        false,
+                folderPath:                         settings.ttt.nvtFolder, 
+                recursive:                          true, 
+                selectProgramsOption:               true, 
+                jsonFile:                           settings.ispw.changedProgramsFile,
+                haltPipelineOnFailure:              false,                 
+                stopIfTestFailsOrThresholdReached:  false,
+                createJUnitReport:                  true, 
+                createReport:                       true, 
+                createResult:                       true, 
+                createSonarReport:                  true,
+                contextVariables:                   '"load_lib=' + loadLibName + '"',
+                // contextVariables:                   '"nvt_ispw_app=' + applicationQualifier + 
+                //                                     ',nvt_ispw_level1=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level1 + 
+                //                                     ',nvt_ispw_level2=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level2 + 
+                //                                     ',nvt_ispw_level3=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level3 + 
+                //                                     ',nvt_ispw_level4=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level4 + 
+                //                                     '"',                
+                collectCodeCoverage:                true,
+                collectCCRepository:                settings.coco.repo,
+                collectCCSystem:                    settings.coco.systemId,
+                collectCCTestID:                    settings.coco.testId,
+                clearCodeCoverage:                  false,
+                logLevel:                           'INFO'
+            )
+        // }
+    }
 }
 
 def getCodeCoverage(settings) {
@@ -606,7 +629,7 @@ def getCodeCoverage(settings) {
         step(
             [
                 $class:             'CodeCoverageBuilder', 
-                connectionId:       settings.hci.connectionId, 
+                connectionId:       'de2ad7c3-e924-4dc2-84d5-d0c3afd3e756', //settings.hci.connectionId, 
                 credentialsId:      settings.hci.credentialsId,
                 analysisProperties: """
                     cc.sources=${settings.coco.sources}
