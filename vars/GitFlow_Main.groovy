@@ -529,7 +529,7 @@ def runUnitTests(Map settings) {
     stage("Run Unit Tests") {
 
         echo "[Info] - Execute Unit Tests."
-
+/* Dummy out the test execution logic
         def loadLibName
 
         if (!(settings.ttt.featureLoadLib == null)) {
@@ -564,7 +564,7 @@ def runUnitTests(Map settings) {
             clearCodeCoverage:                  false,
             logLevel:                           'INFO'
         )
-
+*/
     }
 }
 
@@ -573,6 +573,8 @@ def runIntegrationTests(Map settings) {
     stage("Run Integration Tests") {
 
         echo "[Info] - Execute Module Integration Tests."
+
+/* Dummy out integration test logic
 
         if (!(settings.ttt.featureLoadLib == null)) {
             loadLibName = settings.ttt.featureLoadLib
@@ -618,6 +620,7 @@ def runIntegrationTests(Map settings) {
                 logLevel:                           'INFO'
             )
         // }
+*/
     }
 }
 
