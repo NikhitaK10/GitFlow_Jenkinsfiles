@@ -435,7 +435,8 @@ def loadMainframeCode(Map settings) {
             stream:             settings.ispw.stream,
             app:                settings.ispw.application, 
             
-            branchMapping:      'feature/** => FEAT,custom,' + assignmentDescription,
+            //branchMapping:      'feature/** => FEAT,custom,' + assignmentDescription,
+            branchMapping:      'feature/** => FEAT,per-branch',
             ispwConfigPath:     settings.ispw.configFile,
             gitCredentialsId:   settings.git.credentialsId,
             gitRepoUrl:         settings.git.repoUrl
