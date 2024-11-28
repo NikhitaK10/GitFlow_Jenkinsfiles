@@ -556,7 +556,7 @@ def runUnitTests(Map settings) {
             createReport:                       true, 
             createResult:                       true, 
             createSonarReport:                  true,
-            contextVariables:                   '"load_lib=' + loadLibName + '"',
+            //contextVariables:                   '"load_lib=' + loadLibName + '"',
             collectCodeCoverage:                true,
             collectCCRepository:                settings.coco.repo,
             collectCCSystem:                    settings.coco.systemId,
@@ -603,7 +603,7 @@ def runIntegrationTests(Map settings) {
                 createReport:                       true, 
                 createResult:                       true, 
                 createSonarReport:                  true,
-                contextVariables:                   '"load_lib=' + loadLibName + '"',
+                //contextVariables:                   '"load_lib=' + loadLibName + '"',
                 // contextVariables:                   '"nvt_ispw_app=' + applicationQualifier + 
                 //                                     ',nvt_ispw_level1=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level1 + 
                 //                                     ',nvt_ispw_level2=' + synchConfig.ttt.loadLibQualfiers[ispwTargetLevel].level2 + 
