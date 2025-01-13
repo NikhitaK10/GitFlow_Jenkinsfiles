@@ -92,7 +92,7 @@ executionEnvironments:
     xlr:
       template:               'GitFlow/GitFlow_Release'
     jenkins:
-      cliPath:                'C:/WB_CLI_201501'
+      cliPath:                'C:\WB_CLI_230502'
     ispw:
       libraryQualifier:         'SALESSUP'    
       mfProject:
