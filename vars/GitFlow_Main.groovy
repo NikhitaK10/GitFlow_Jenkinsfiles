@@ -356,11 +356,10 @@ def createSandbox(settings) {
             "assignmentPrefix":     "''' + settings.ispw.appPrefix      + '''",
             "defaultPath":          "UNIT",
             "description":          "''' + assignmentDescription            + '''",
-            "owner":                "''' + settings.hci.user                + '''"
+            "owner":                "''' + settings.hci.user                + '''",
+            "sandboxJoinAtLevel":   "RLSE"
         }'''
-    //            ,
-    //        "sandboxJoinAtLevel":   "RLSE"
-    
+  
     def httpResponse
 
     try {
