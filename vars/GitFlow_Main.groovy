@@ -459,7 +459,6 @@ def loadMainframeCode(String fromCommit, String toCommit, Map settings) {
                 '-protocol None ' +
                 '-code 1047 ' +
                 '-timeout "0" ' +
-                '-targetFolder ./ ' +
                 '-data ./TopazCliWkspc ' +
                 '-ispwServerConfig ' + settings.ispw.runtimeConfig + ' ' +
                 '-ispwServerStream ' + settings.ispw.stream + ' ' +
