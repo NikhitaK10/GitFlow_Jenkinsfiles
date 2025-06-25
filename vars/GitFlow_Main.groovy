@@ -623,14 +623,15 @@ def runIntegrationTests(Map settings) {
 
 def getCodeCoverage(settings) {
 
-    echo "[Info] - Getting Code Coverage data from Mainframe."
+    echo "[Info] - Getting Code Coverage data from Mainframe (MKS)."
 
     stage("Get Code Coverage") {
 
         step(
             [
                 $class:             'CodeCoverageBuilder', 
-                connectionId:       'de2ad7c3-e924-4dc2-84d5-d0c3afd3e756', //settings.hci.connectionId, 
+                //connectionId:       'de2ad7c3-e924-4dc2-84d5-d0c3afd3e756', //OLD ID
+                connectionId:       '38e854b0-f7d3-4a8f-bf31-2d8bfac3dbd4', //settings.hci.connectionId, 
                 credentialsId:      settings.hci.credentialsId,
                 analysisProperties: """
                     cc.sources=${settings.coco.sources}
