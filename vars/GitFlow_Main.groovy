@@ -133,7 +133,7 @@ def initializeSettings(configFile, parms) {
 
     stage("Initialization") {
 
-        //cleanWs()
+        cleanWs()
 
         def tmpSettings             = readYaml(text: libraryResource(configFile))
 
